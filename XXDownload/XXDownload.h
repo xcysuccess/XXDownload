@@ -17,4 +17,14 @@
  */
 - (void)sync_connection;
 
+/**
+ NSURLConnection with async block
+ */
+- (void)async_connectionWithCompletion:(void (^)())completion;
+
+/**
+ NSURLConnection with async delegate
+ */
+- (void)async_connectionWithDelegate;
+
 @end

@@ -29,8 +29,15 @@
 - (IBAction)actionNSURLConnectionSYNC:(UIButton *)sender {
     [[XXDownload sharedInstance] sync_connection];
 }
+
 - (IBAction)actionNSURLConnectionASYNC:(UIButton *)sender {
-    
+    [[XXDownload sharedInstance] async_connectionWithCompletion:^{
+        NSLog(@"Completion Finished!");
+    }];
+}
+
+- (IBAction)actionNSURLConnectionASYNC_Delegate:(id)sender {
+    [[XXDownload sharedInstance] async_connectionWithDelegate];
 }
 
 @end
