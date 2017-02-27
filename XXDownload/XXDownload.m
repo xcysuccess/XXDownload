@@ -131,7 +131,7 @@
     NSLog(@"---Content---:%@",string);
 }
 
-#pragma mark- Session Block
+#pragma mark- Session Block Get
 - (void)async_sessionDataTaskGet{
     NSURL *url = [NSURL URLWithString:JSON_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -159,7 +159,7 @@
     [dataTask resume];
 }
 
-#pragma mark- Session Post
+#pragma mark- Session Block Post
 - (void)async_sessionDataTaskPost{
     NSURL *url = [NSURL URLWithString:JSON_URL_FRONT];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];

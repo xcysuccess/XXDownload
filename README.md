@@ -59,7 +59,9 @@ HTTP协议规定：1个完整的HTTP相应中包含以下内容
 第三方:  
 AFNetworking  
 
-##### 1.NSURLConnection常用类
+####五.NSURLConnection  
+
+##### 1.NSURLConnect常用类
 1. **NSURL**: 用于请求地址  
 2. **NSURLRequest**: 用于封装一个请求，保存发给服务器的全部数据，包括NSURL对象，**请求方式**，**请求头**及**请求体**等。默认的请求方式是GET
 3. **NSMutableURLRequest**:  
@@ -128,15 +130,48 @@ AFNetworking
 
 
 ##### 3.异步
+```objc
+#pragma mark- AsyncConnection Block
+- (void)async_connectionWithCompletion:(void (^)())completion{
+    /*
+     *1.创建NSURL对象
+     *2.创建NSURLRequest对象，默认是GET
+     *3.使用NSURLConnection发送请求
+     */
+    NSURL *url = [NSURL URLWithString:JSON_URL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    /*
+     *response:响应头,状态行
+     *error:发送请求时出现的错误
+     *data:响应内容
+     */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+#pragma clang diagnostic pop
+        if(connectionError == nil){
+            NSLog(@"--Header--:%@",response);
+            
+            NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"---Content---:%@",string);
+        }
+        NSLog(@"currentThread=%@",[NSThread currentThread]);
+        if (completion) {
+            completion();
+        }
+    }];
+}
+```
 
+####五. NSURLSession
 
-#### 五. NSURLSession
-##### 1. 使用步骤
+#####1. 使用步骤
 1. 创建NSURLSession的会话  
 2. 根据会话创建Task
 3. 执行Task
 
-##### 2. Task的类型
+#####2. Task的类型
 ![Images/1.png](Images/1.png)
 
 NSURLSessionDataTask:请求数据  
@@ -153,7 +188,7 @@ NSURLSessionDownloadTask:下载
   delegateQueue:(nullable NSOperationQueue *)queue;
 ```
 
-##### 3.NSURLSessionTask
+#####3. NSURLSessionTask
 获常见方法  
 
 ```objc
@@ -162,5 +197,135 @@ NSURLSessionDownloadTask:下载
 - (void)cancel;
 - (void)cancelByProducingResumeData:(void (^)(NSData *resumeData)) completionHandler;
 ```
-	
+
+
+#####4. Get请求用block执行
+```objc
+#pragma mark- Session Block Get
+- (void)async_sessionDataTaskGet{
+    NSURL *url = [NSURL URLWithString:JSON_URL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    /*
+     *1.创建Session
+     *2.根据创建任务
+     *3.发送任务
+     */
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"--%@--",[NSThread currentThread]);
+        
+        if(error == nil){
+            id objc = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"%@",objc);
+        }
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            NSLog(@"我回到了主线程!");
+        }];
+    }];
+    
+    [dataTask resume];
+}
+```  
+
+#####5. Post请求用block执行
+```objc
+#pragma mark- Session Block Post
+- (void)async_sessionDataTaskPost{
+    NSURL *url = [NSURL URLWithString:JSON_URL_FRONT];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [@"id=2" dataUsingEncoding:NSUTF8StringEncoding];
+    /*
+     *1.创建Session
+     *2.根据创建任务
+     *3.发送任务
+     */
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSThread *currentThead1 = [NSThread currentThread];
+        NSOperationQueue *currentQueue1 = [NSOperationQueue currentQueue];
+        
+        NSLog(@"--CurrentThead1%@--",currentThead1);
+        NSLog(@"--OperationQueue1--:%@",currentQueue1);
+        
+        [currentQueue1 addOperationWithBlock:^{
+            NSThread *currentThead2 = [NSThread currentThread];
+            NSOperationQueue *currentQueue2 = [NSOperationQueue currentQueue];
+            
+            NSLog(@"--CurrentThead2%@--",currentThead2);
+            NSLog(@"--OperationQueue2--:%@",currentQueue2);
+            
+            if([currentThead1 isEqual:currentThead2]){
+                NSLog(@"Thread Equal YES!");
+            }
+            
+            if([currentQueue1 isEqual:currentQueue2]){
+                NSLog(@"Queue Equal YES!");
+            }
+        }];
+        
+//        if(error == nil){
+//            id objc = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//            NSLog(@"%@",objc);
+//        }
+        
+//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//            NSLog(@"我回到了主线程!");
+//        }];
+        
+
+    }];
+    
+    [dataTask resume];
+}
+```
+
+#####6. delegate委托
+```objc
+- (void)async_sessionDataTaskPostDelegate{
+    NSURL *url = [NSURL URLWithString:JSON_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+
+//    defaultSessionConfiguration:默认
+//    ephemeralSessionConfiguration;无痕
+//    backgroundSessionConfigurationWithIdentifier 后台
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request];
+    
+    [dataTask resume];
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
+    NSLog(@"Response=%@",response);
+    if(_mulData){
+        _mulData.length = 0;
+    }else{
+        _mulData = [NSMutableData data];
+    }
+    
+    if(completionHandler){
+        completionHandler(NSURLSessionResponseAllow);
+    }
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data{
+    [_mulData appendData:data];
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+didCompleteWithError:(nullable NSError *)error{
+    if(error == nil){
+        id objc = [NSJSONSerialization JSONObjectWithData:_mulData options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"--%@",objc);
+    }
+}
+```
+
 
