@@ -27,4 +27,11 @@
  */
 - (void)async_connectionWithDelegate;
 
+/**
+ NSURLSessionDataTask
+ */
+- (void)async_sessionDataTaskGet;
+
+- (void)async_sessionDataTaskPost;
+
 @end

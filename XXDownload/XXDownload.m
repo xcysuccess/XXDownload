@@ -8,7 +8,8 @@
 
 #import "XXDownload.h"
 
-#define JSON_URL @"http://new.api.bandu.cn/book/listofgrade"
+#define JSON_URL @"http://new.api.bandu.cn/book/listofgrade?id=2"
+#define JSON_URL_FRONT @"http://new.api.bandu.cn/book/listofgrade"
 
 @interface XXDownload()<NSURLConnectionDataDelegate>
 @property(nonatomic,strong) NSMutableData *mulData;
@@ -129,5 +130,84 @@
     NSString *string = [[NSString alloc] initWithData:_mulData encoding:NSUTF8StringEncoding];
     NSLog(@"---Content---:%@",string);
 }
+
+
+- (void)async_sessionDataTaskGet{
+    NSURL *url = [NSURL URLWithString:JSON_URL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    /*
+     *1.创建Session
+     *2.根据创建任务
+     *3.发送任务
+     */
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"--%@--",[NSThread currentThread]);
+        
+        if(error == nil){
+            id objc = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"%@",objc);
+        }
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            NSLog(@"我回到了主线程!");
+        }];
+    }];
+    
+    [dataTask resume];
+}
+
+- (void)async_sessionDataTaskPost{
+    NSURL *url = [NSURL URLWithString:JSON_URL_FRONT];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [@"id=2" dataUsingEncoding:NSUTF8StringEncoding];
+    /*
+     *1.创建Session
+     *2.根据创建任务
+     *3.发送任务
+     */
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSThread *currentThead1 = [NSThread currentThread];
+        NSOperationQueue *currentQueue1 = [NSOperationQueue currentQueue];
+        
+        NSLog(@"--CurrentThead1%@--",currentThead1);
+        NSLog(@"--OperationQueue1--:%@",currentQueue1);
+        
+        [currentQueue1 addOperationWithBlock:^{
+            NSThread *currentThead2 = [NSThread currentThread];
+            NSOperationQueue *currentQueue2 = [NSOperationQueue currentQueue];
+            
+            NSLog(@"--CurrentThead2%@--",currentThead2);
+            NSLog(@"--OperationQueue2--:%@",currentQueue2);
+            
+            if([currentThead1 isEqual:currentThead2]){
+                NSLog(@"Thread Equal YES!");
+            }
+            
+            if([currentQueue1 isEqual:currentQueue2]){
+                NSLog(@"Queue Equal YES!");
+            }
+        }];
+        
+//        if(error == nil){
+//            id objc = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//            NSLog(@"%@",objc);
+//        }
+        
+//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//            NSLog(@"我回到了主线程!");
+//        }];
+        
+
+    }];
+    
+    [dataTask resume];
+}
+
 
 @end

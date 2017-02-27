@@ -125,11 +125,42 @@ AFNetworking
 2017-02-22 20:53:57.631 XXDownload[31032:366904] ---Content---:{"status":1,"data":{"list":[{"version":"\u4eba\u6559PEP\u7248","list":...
 ```  
 
-##### 3.使用NSURLConnection发送异步请求的步骤
 
 
+##### 3.异步
 
 
+#### 五. NSURLSession
+##### 1. 使用步骤
+1. 创建NSURLSession的会话  
+2. 根据会话创建Task
+3. 执行Task
 
+##### 2. Task的类型
+![Images/1.png](Images/1.png)
+
+NSURLSessionDataTask:请求数据  
+NSURLSessionUploadTask:上传  
+NSURLSessionDownloadTask:下载  
+
+获取NSURLSession的方法：  
+
+```objc
+[NSURLSession sharedSession];  
++ (NSURLSession *)sessionWithConfiguration:(NSURLSessionConfiguration *)configuration;   
++ (NSURLSession *)sessionWithConfiguration:(NSURLSessionConfiguration *)configuration  
+  delegate:(nullable id <NSURLSessionDelegate>)delegate   
+  delegateQueue:(nullable NSOperationQueue *)queue;
+```
+
+##### 3.NSURLSessionTask
+获常见方法  
+
+```objc
+- (void)suspend;
+- (void)resume;
+- (void)cancel;
+- (void)cancelByProducingResumeData:(void (^)(NSData *resumeData)) completionHandler;
+```
 	
 

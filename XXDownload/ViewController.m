@@ -39,5 +39,13 @@
 - (IBAction)actionNSURLConnectionASYNC_Delegate:(id)sender {
     [[XXDownload sharedInstance] async_connectionWithDelegate];
 }
+- (IBAction)actionAsync_sessionDataTask:(id)sender {
+    [[XXDownload sharedInstance] async_sessionDataTaskGet];
+
+}
+- (IBAction)actionAsync_sessionDataTaskPost:(id)sender {
+    [[XXDownload sharedInstance] async_sessionDataTaskPost];
+
+}
 
 @end
