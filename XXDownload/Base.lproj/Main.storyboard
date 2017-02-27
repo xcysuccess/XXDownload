@@ -81,11 +81,22 @@
                                     <action selector="actionAsync_sessionDataTaskDelegate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sxh-06-pQf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-hn-ciL">
+                                <rect key="frame" x="62" y="306" width="250" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="8dj-qv-01y"/>
+                                </constraints>
+                                <state key="normal" title="Async_sessionDownloadTask"/>
+                                <connections>
+                                    <action selector="actionAsync_sessionDataDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gyw-s4-XNI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="SRc-no-qjJ" firstAttribute="top" secondItem="uHp-8R-3bG" secondAttribute="bottom" constant="18" id="6XB-7q-xfa"/>
                             <constraint firstItem="uHp-8R-3bG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6vK-7l-GuH"/>
+                            <constraint firstItem="NQb-hn-ciL" firstAttribute="leading" secondItem="570-1X-cSL" secondAttribute="leading" id="Heq-Z7-Lsq"/>
                             <constraint firstItem="uOd-5u-Ccn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ik5-nk-M69"/>
                             <constraint firstItem="570-1X-cSL" firstAttribute="top" secondItem="cD6-Fo-byw" secondAttribute="bottom" constant="18" id="KpS-ZS-xHY"/>
                             <constraint firstItem="cD6-Fo-byw" firstAttribute="top" secondItem="uOd-5u-Ccn" secondAttribute="bottom" constant="20" id="NUZ-kj-5QZ"/>
@@ -95,6 +106,7 @@
                             <constraint firstItem="uHp-8R-3bG" firstAttribute="top" secondItem="ZDi-QP-Caz" secondAttribute="bottom" constant="16" id="RNJ-7r-vWG"/>
                             <constraint firstItem="cD6-Fo-byw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TMN-9W-kSX"/>
                             <constraint firstItem="570-1X-cSL" firstAttribute="leading" secondItem="cD6-Fo-byw" secondAttribute="leading" id="ZL1-Zb-GJu"/>
+                            <constraint firstItem="NQb-hn-ciL" firstAttribute="top" secondItem="570-1X-cSL" secondAttribute="bottom" constant="8" symbolic="YES" id="bBE-1T-ziF"/>
                             <constraint firstItem="uOd-5u-Ccn" firstAttribute="top" secondItem="SRc-no-qjJ" secondAttribute="bottom" constant="18" id="dmQ-CO-Pym"/>
                         </constraints>
                     </view>

@@ -36,4 +36,5 @@
 
 - (void)async_sessionDataTaskPostDelegate;
 
+- (void)async_sessionDownloadImg;
 @end

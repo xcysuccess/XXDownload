@@ -50,5 +50,8 @@
 - (IBAction)actionAsync_sessionDataTaskDelegate:(id)sender {
     [[XXDownload sharedInstance] async_sessionDataTaskPostDelegate];
 }
+- (IBAction)actionAsync_sessionDataDownload:(id)sender {
+    [[XXDownload sharedInstance] async_sessionDownloadImg];
+}
 
 @end
