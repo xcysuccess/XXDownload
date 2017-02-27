@@ -34,4 +34,6 @@
 
 - (void)async_sessionDataTaskPost;
 
+- (void)async_sessionDataTaskPostDelegate;
+
 @end

@@ -47,5 +47,8 @@
     [[XXDownload sharedInstance] async_sessionDataTaskPost];
 
 }
+- (IBAction)actionAsync_sessionDataTaskDelegate:(id)sender {
+    [[XXDownload sharedInstance] async_sessionDataTaskPostDelegate];
+}
 
 @end

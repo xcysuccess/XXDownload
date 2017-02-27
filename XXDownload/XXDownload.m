@@ -11,7 +11,7 @@
 #define JSON_URL @"http://new.api.bandu.cn/book/listofgrade?id=2"
 #define JSON_URL_FRONT @"http://new.api.bandu.cn/book/listofgrade"
 
-@interface XXDownload()<NSURLConnectionDataDelegate>
+@interface XXDownload()<NSURLConnectionDataDelegate,NSURLSessionDataDelegate>
 @property(nonatomic,strong) NSMutableData *mulData;
 @end
 
@@ -131,7 +131,7 @@
     NSLog(@"---Content---:%@",string);
 }
 
-
+#pragma mark- Session Block
 - (void)async_sessionDataTaskGet{
     NSURL *url = [NSURL URLWithString:JSON_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -159,6 +159,7 @@
     [dataTask resume];
 }
 
+#pragma mark- Session Post
 - (void)async_sessionDataTaskPost{
     NSURL *url = [NSURL URLWithString:JSON_URL_FRONT];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -171,7 +172,7 @@
      */
     NSURLSession *session = [NSURLSession sharedSession];
     
-    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSThread *currentThead1 = [NSThread currentThread];
         NSOperationQueue *currentQueue1 = [NSOperationQueue currentQueue];
         
@@ -209,5 +210,46 @@
     [dataTask resume];
 }
 
+#pragma mark- Session Data Delegate
+- (void)async_sessionDataTaskPostDelegate{
+    NSURL *url = [NSURL URLWithString:JSON_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+
+//    defaultSessionConfiguration:默认
+//    ephemeralSessionConfiguration;无痕
+//    backgroundSessionConfigurationWithIdentifier 后台
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request];
+    
+    [dataTask resume];
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
+    NSLog(@"Response=%@",response);
+    if(_mulData){
+        _mulData.length = 0;
+    }else{
+        _mulData = [NSMutableData data];
+    }
+    
+    if(completionHandler){
+        completionHandler(NSURLSessionResponseAllow);
+    }
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data{
+    [_mulData appendData:data];
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+didCompleteWithError:(nullable NSError *)error{
+    if(error == nil){
+        id objc = [NSJSONSerialization JSONObjectWithData:_mulData options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"--%@",objc);
+    }
+}
 
 @end
