@@ -12,6 +12,7 @@
 
 + (instancetype)sharedInstance;
 
+@property (class) NSString *someString;
 /**
  NSURLConnection with sync
  */

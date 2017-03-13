@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "XXDownload.h"
 
 @interface XXDownloadTests : XCTestCase
 
@@ -34,6 +35,10 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
+}
+
+- (void)testDownloadContent{
+    [[XXDownload sharedInstance] sync_connection];
 }
 
 @end
