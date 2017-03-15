@@ -1,18 +1,17 @@
 //
-//  XXDownload.h
+//  XXURLOld.h
 //  XXDownload
 //
-//  Created by tomxiang on 2017/2/22.
+//  Created by tomxiang on 2017/3/15.
 //  Copyright © 2017年 tomxiang. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface XXDownload : NSObject
+@interface XXURLOld : NSObject
 
 + (instancetype)sharedInstance;
 
-@property (class) NSString *someString;
 /**
  NSURLConnection with sync
  */
@@ -28,14 +27,4 @@
  */
 - (void)async_connectionWithDelegate;
 
-/**
- NSURLSessionDataTask
- */
-- (void)async_sessionDataTaskGet;
-
-- (void)async_sessionDataTaskPost;
-
-- (void)async_sessionDataTaskPostDelegate;
-
-- (void)async_sessionDownloadImg;
 @end

@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9ACA4AC91E5DBADB005ADDDE /* XXDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA4AC81E5DBADB005ADDDE /* XXDownload.m */; };
+		9ABC94F11E796C5500B62EDD /* XXDownloadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC94F01E796C5500B62EDD /* XXDownloadFile.m */; };
+		9ABC94F41E796CDE00B62EDD /* XXURLOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC94F31E796CDE00B62EDD /* XXURLOld.m */; };
+		9ABC94F71E796D6500B62EDD /* XXURLNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC94F61E796D6500B62EDD /* XXURLNew.m */; };
+		9ACA4AC91E5DBADB005ADDDE /* XXDownloadImg.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA4AC81E5DBADB005ADDDE /* XXDownloadImg.m */; };
 		9ADA041F1E5C5BBB00937CAB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA041E1E5C5BBB00937CAB /* main.m */; };
 		9ADA04221E5C5BBB00937CAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA04211E5C5BBB00937CAB /* AppDelegate.m */; };
 		9ADA04251E5C5BBB00937CAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA04241E5C5BBB00937CAB /* ViewController.m */; };
@@ -36,8 +39,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9ACA4AC71E5DBADB005ADDDE /* XXDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXDownload.h; sourceTree = "<group>"; };
-		9ACA4AC81E5DBADB005ADDDE /* XXDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXDownload.m; sourceTree = "<group>"; };
+		9ABC94EF1E796C5500B62EDD /* XXDownloadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXDownloadFile.h; sourceTree = "<group>"; };
+		9ABC94F01E796C5500B62EDD /* XXDownloadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXDownloadFile.m; sourceTree = "<group>"; };
+		9ABC94F21E796CDE00B62EDD /* XXURLOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXURLOld.h; sourceTree = "<group>"; };
+		9ABC94F31E796CDE00B62EDD /* XXURLOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXURLOld.m; sourceTree = "<group>"; };
+		9ABC94F51E796D6500B62EDD /* XXURLNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXURLNew.h; sourceTree = "<group>"; };
+		9ABC94F61E796D6500B62EDD /* XXURLNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXURLNew.m; sourceTree = "<group>"; };
+		9ACA4AC71E5DBADB005ADDDE /* XXDownloadImg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXDownloadImg.h; sourceTree = "<group>"; };
+		9ACA4AC81E5DBADB005ADDDE /* XXDownloadImg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXDownloadImg.m; sourceTree = "<group>"; };
 		9ADA041A1E5C5BBB00937CAB /* XXDownload.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXDownload.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ADA041E1E5C5BBB00937CAB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9ADA04201E5C5BBB00937CAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -108,8 +117,14 @@
 				9ADA04211E5C5BBB00937CAB /* AppDelegate.m */,
 				9ADA04231E5C5BBB00937CAB /* ViewController.h */,
 				9ADA04241E5C5BBB00937CAB /* ViewController.m */,
-				9ACA4AC71E5DBADB005ADDDE /* XXDownload.h */,
-				9ACA4AC81E5DBADB005ADDDE /* XXDownload.m */,
+				9ABC94F21E796CDE00B62EDD /* XXURLOld.h */,
+				9ABC94F31E796CDE00B62EDD /* XXURLOld.m */,
+				9ABC94F51E796D6500B62EDD /* XXURLNew.h */,
+				9ABC94F61E796D6500B62EDD /* XXURLNew.m */,
+				9ACA4AC71E5DBADB005ADDDE /* XXDownloadImg.h */,
+				9ACA4AC81E5DBADB005ADDDE /* XXDownloadImg.m */,
+				9ABC94EF1E796C5500B62EDD /* XXDownloadFile.h */,
+				9ABC94F01E796C5500B62EDD /* XXDownloadFile.m */,
 				9ADA04261E5C5BBB00937CAB /* Main.storyboard */,
 				9ADA04291E5C5BBB00937CAB /* Assets.xcassets */,
 				9ADA042B1E5C5BBB00937CAB /* LaunchScreen.storyboard */,
@@ -281,10 +296,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ABC94F71E796D6500B62EDD /* XXURLNew.m in Sources */,
 				9ADA04251E5C5BBB00937CAB /* ViewController.m in Sources */,
 				9ADA04221E5C5BBB00937CAB /* AppDelegate.m in Sources */,
 				9ADA041F1E5C5BBB00937CAB /* main.m in Sources */,
-				9ACA4AC91E5DBADB005ADDDE /* XXDownload.m in Sources */,
+				9ACA4AC91E5DBADB005ADDDE /* XXDownloadImg.m in Sources */,
+				9ABC94F11E796C5500B62EDD /* XXDownloadFile.m in Sources */,
+				9ABC94F41E796CDE00B62EDD /* XXURLOld.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

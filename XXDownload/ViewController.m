@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "XXDownload.h"
+#import "XXURLOld.h"
+#import "XXURLNew.h"
+#import "XXDownloadImg.h"
+#import "XXDownloadFile.h"
 
 @interface ViewController ()
 
@@ -27,31 +30,40 @@
 }
 
 - (IBAction)actionNSURLConnectionSYNC:(UIButton *)sender {
-    [[XXDownload sharedInstance] sync_connection];
+    [[XXURLOld sharedInstance] sync_connection];
 }
 
 - (IBAction)actionNSURLConnectionASYNC:(UIButton *)sender {
-    [[XXDownload sharedInstance] async_connectionWithCompletion:^{
+    [[XXURLOld sharedInstance] async_connectionWithCompletion:^{
         NSLog(@"Completion Finished!");
     }];
 }
 
 - (IBAction)actionNSURLConnectionASYNC_Delegate:(id)sender {
-    [[XXDownload sharedInstance] async_connectionWithDelegate];
+    [[XXURLOld sharedInstance] async_connectionWithDelegate];
 }
 - (IBAction)actionAsync_sessionDataTask:(id)sender {
-    [[XXDownload sharedInstance] async_sessionDataTaskGet];
+    [[XXURLNew sharedInstance] async_sessionDataTaskGet];
 
 }
 - (IBAction)actionAsync_sessionDataTaskPost:(id)sender {
-    [[XXDownload sharedInstance] async_sessionDataTaskPost];
+    [[XXURLNew sharedInstance] async_sessionDataTaskPost];
 
 }
 - (IBAction)actionAsync_sessionDataTaskDelegate:(id)sender {
-    [[XXDownload sharedInstance] async_sessionDataTaskPostDelegate];
+    [[XXURLNew sharedInstance] async_sessionDataTaskPostDelegate];
 }
 - (IBAction)actionAsync_sessionDataDownload:(id)sender {
-    [[XXDownload sharedInstance] async_sessionDownloadImg];
+    [[XXDownloadImg sharedInstance] async_sessionDownloadImg];
+}
+- (IBAction)actionStart:(id)sender {
+    [[XXDownloadFile sharedInstance] startDownloadFile];
+}
+- (IBAction)actionResume:(id)sender {
+    [[XXDownloadFile sharedInstance] resumeDownloadFile];
+}
+- (IBAction)actionPause:(id)sender {
+    [[XXDownloadFile sharedInstance] pauseDownloadFile];
 }
 
 @end
