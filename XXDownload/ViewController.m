@@ -12,6 +12,10 @@
 #import "XXDownloadImg.h"
 #import "XXDownloadFile.h"
 
+#import "XXURLAFNetworking.h"
+#import "XXDownloadAFNetworking.h"
+#import "XXNetMonitorAFNetworking.h"
+
 @interface ViewController ()
 
 @end
@@ -66,4 +70,15 @@
     [[XXDownloadFile sharedInstance] pauseDownloadFile];
 }
 
+- (IBAction)actionAFNetURL:(id)sender {
+    [[XXURLAFNetworking sharedInstance] requestURL];
+}
+
+- (IBAction)actionAFNetDownImg:(id)sender {
+    [[XXDownloadAFNetworking sharedInstance] downloadImg];
+
+}
+- (IBAction)actionAFNetStartMonitor:(id)sender {
+    [[XXNetMonitorAFNetworking sharedInstance] startMonitorNetChange];
+}
 @end
